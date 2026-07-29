@@ -1,25 +1,210 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GlobalFX News</title>
-<style>
-body{
-font-family:Arial,sans-serif;
-background:#0f172a;
-color:white;
-text-align:center;
-margin:0;
-padding:40px;
-}
-h1{color:#22c55e;}
-p{font-size:20px;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlobalFX News | Finans & Piyasalar</title>
+    <meta name="description" content="Canlı altın, forex, kripto ve emtia verileri ile küresel finans haberleri.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 </head>
-<body>
-<h1>🌍 GlobalFX News</h1>
-<p>Forex, Altın, Kripto ve Borsa Haberleri</p>
-<p>Yakında hizmetinizde!</p>
+<body class="dark-mode">
+
+    <!-- Top Ticker Bar -->
+    <div class="ticker-wrap">
+        <div class="ticker" id="crypto-ticker">
+            <div class="ticker-item"><span class="symbol">XAU/USD</span> <span class="price" id="gold-price">--</span> <span class="change" id="gold-change">--</span></div>
+            <div class="ticker-item"><span class="symbol">EUR/USD</span> <span class="price" id="eurusd-price">--</span> <span class="change" id="eurusd-change">--</span></div>
+            <div class="ticker-item"><span class="symbol">BTC/USD</span> <span class="price" id="btc-price">--</span> <span class="change" id="btc-change">--</span></div>
+            <div class="ticker-item"><span class="symbol">ETH/USD</span> <span class="price" id="eth-price">--</span> <span class="change" id="eth-change">--</span></div>
+            <div class="ticker-item"><span class="symbol">BRENT</span> <span class="price" id="oil-price">$82.45</span> <span class="change up">+0.8%</span></div>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <span class="gold-text">GLOBAL</span>FX <span class="tag">NEWS</span>
+            </a>
+            
+            <nav class="nav-menu" id="nav-menu">
+                <a href="#hero" class="active" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a>
+                <a href="#news" data-tr="Haberler" data-en="News">Haberler</a>
+                <a href="#altin" data-tr="Altın & Emtia" data-en="Gold & Commodities">Altın & Emtia</a>
+                <a href="#forex" data-tr="Forex" data-en="Forex">Forex</a>
+                <a href="#kripto" data-tr="Kripto" data-en="Crypto">Kripto</a>
+                <a href="#calendar" data-tr="Ekonomik Takvim" data-en="Calendar">Ekonomik Takvim</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Haber veya sembol ara..." data-tr-placeholder="Haber veya sembol ara..." data-en-placeholder="Search news or symbols...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <button class="lang-btn" id="lang-toggle">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breaking News Bar -->
+    <div class="breaking-news container">
+        <span class="breaking-label" data-tr="SON DAKİKA" data-en="BREAKING">SON DAKİKA</span>
+        <div class="breaking-content">
+            <p id="breaking-text">Fed Faiz Kararı Sonrası Altın Rekor Seviyeye Yaklaştı...</p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="container main-layout">
+        
+        <!-- Left Content Area -->
+        <section class="content-area">
+            
+            <!-- Hero News & Main Chart -->
+            <div class="hero-grid" id="hero">
+                <div class="main-news-card fade-in">
+                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1000&q=80" alt="Market News">
+                    <div class="news-overlay">
+                        <span class="badge gold" data-tr="ÖNE ÇIKAN" data-en="FEATURED">ÖNE ÇIKAN</span>
+                        <h2>Küresel Piyasalar Fed Tutanakları Öncesinde Yükselişte</h2>
+                        <p>Merkez bankalarının faiz politikalarına ilişkin beklentiler ve jeopolitik gelişmeler altın ve döviz piyasalarını hareketlendiriyor.</p>
+                        <span class="news-date"><i class="far fa-clock"></i> 10 Dk Önce</span>
+                    </div>
+                </div>
+                
+                <div class="chart-container-box">
+                    <div class="section-header">
+                        <h3 data-tr="Canlı Grafik (XAU/USD)" data-en="Live Chart (XAU/USD)">Canlı Grafik (XAU/USD)</h3>
+                    </div>
+                    <div id="tradingview_chart" class="tv-chart"></div>
+                </div>
+            </div>
+
+            <!-- Ad Banner Top -->
+            <div class="ad-banner-horizontal">
+                <span>REKLAM ALANI (728x90)</span>
+            </div>
+
+            <!-- News Grid Section -->
+            <section class="news-section" id="news">
+                <div class="section-header">
+                    <h3 data-tr="Son Gelişmeler" data-en="Latest News">Son Gelişmeler</h3>
+                    <div class="category-filters">
+                        <button class="filter-btn active" data-cat="all" data-tr="Tümü" data-en="All">Tümü</button>
+                        <button class="filter-btn" data-cat="altin" data-tr="Altın" data-en="Gold">Altın</button>
+                        <button class="filter-btn" data-cat="forex" data-tr="Forex" data-en="Forex">Forex</button>
+                        <button class="filter-btn" data-cat="kripto" data-tr="Kripto" data-en="Crypto">Kripto</button>
+                    </div>
+                </div>
+                <div class="news-grid" id="news-grid">
+                    <!-- Dynamic News Inject Here -->
+                </div>
+            </section>
+
+            <!-- Market Heatmap Section -->
+            <section class="heatmap-section">
+                <div class="section-header">
+                    <h3 data-tr="Piyasa Isı Haritası" data-en="Market Heatmap">Piyasa Isı Haritası</h3>
+                </div>
+                <!-- TradingView Heatmap Widget -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-heat-map.js" async>
+                    {
+                    "width": "100%",
+                    "height": 400,
+                    "currencies": ["EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD"],
+                    "isTransparent": true,
+                    "colorTheme": "dark",
+                    "locale": "tr"
+                    }
+                    </script>
+                </div>
+            </section>
+
+        </section>
+
+        <!-- Right Sidebar Area -->
+        <aside class="sidebar">
+            
+            <!-- Live Rates Box -->
+            <div class="widget-box">
+                <h4 class="widget-title" data-tr="Piyasa Özeti" data-en="Market Overview"><i class="fas fa-chart-line"></i> Piyasa Özeti</h4>
+                <div class="market-list">
+                    <div class="market-item">
+                        <span><i class="fas fa-coins gold-text"></i> Ons Altın</span>
+                        <b id="side-xau">$2,385.50</b>
+                    </div>
+                    <div class="market-item">
+                        <span><i class="fas fa-layer-group"></i> Gümüş</span>
+                        <b id="side-xag">$28.40</b>
+                    </div>
+                    <div class="market-item">
+                        <span><i class="fas fa-dollar-sign"></i> EUR/USD</span>
+                        <b id="side-eur">1.0892</b>
+                    </div>
+                    <div class="market-item">
+                        <span><i class="fab fa-bitcoin"></i> Bitcoin</span>
+                        <b id="side-btc">$64,200</b>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ad Banner Sidebar -->
+            <div class="ad-banner-vertical">
+                <span>REKLAM ALANI (300x250)</span>
+            </div>
+
+            <!-- Economic Calendar Widget -->
+            <div class="widget-box" id="calendar">
+                <h4 class="widget-title" data-tr="Ekonomik Takvim" data-en="Economic Calendar"><i class="fas fa-calendar-alt"></i> Ekonomik Takvim</h4>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                    {
+                    "colorTheme": "dark",
+                    "isTransparent": true,
+                    "width": "100%",
+                    "height": "400",
+                    "locale": "tr",
+                    "importanceFilter": "-1,0,1"
+                    }
+                    </script>
+                </div>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <span class="gold-text">GLOBAL</span>FX <span class="tag">NEWS</span>
+                <p data-tr="Küresel finans piyasaları, anlık canlı borsa verileri ve bağımsız analizler." data-en="Global financial markets, instant live data and independent analysis.">Küresel finans piyasaları, anlık canlı borsa verileri ve bağımsız analizler.</p>
+            </div>
+            <div class="footer-links">
+                <h4 data-tr="Hızlı Bağlantılar" data-en="Quick Links">Hızlı Bağlantılar</h4>
+                <ul>
+                    <li><a href="#news">Haberler</a></li>
+                    <li><a href="#altin">Altın Piyasası</a></li>
+                    <li><a href="#forex">Forex Pariteleri</a></li>
+                    <li><a href="#kripto">Kripto Varlıklar</a></li>
+                </ul>
+            </div>
+            <div class="footer-disclaimer">
+                <h4 data-tr="Yasal Uyarı" data-en="Disclaimer">Yasal Uyarı</h4>
+                <p data-tr="Sitede yer alan veriler ve haberler yatırım tavsiyesi niteliğinde değildir." data-en="Data and news on this site do not constitute investment advice.">Sitede yer alan veriler ve haberler yatırım tavsiyesi niteliğinde değildir.</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 GlobalFX News. Tüm hakları saklıdır.
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
